@@ -4,15 +4,11 @@ import com.cetin.hospital.model.Doctor;
 
 import com.cetin.hospital.repository.DoctorRepository;
 import com.cetin.hospital.request.DoctorRequest;
-import com.cetin.hospital.request.TimeRequest;
 import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,6 +19,26 @@ public class DoctorService {
     public DoctorService(DoctorRepository doctorRepository, TimeService timeService) {
         this.doctorRepository = doctorRepository;
         this.timeService = timeService;
+    }
+
+    public List<Doctor> getAllDoctors() {
+        return doctorRepository.findAll();
+    }
+
+    public Doctor getDoctorById(Long doctorId) {
+        Doctor doctor = doctorRepository.findById(doctorId).orElseThrow(() -> new EntityNotFoundException("Invalid doctorId"));
+
+        if (timeService.isLastClockApproaching(doctorId, 15)) {
+            LocalDate currentDate = LocalDate.now();
+            LocalDate futureDate = currentDate.plusDays(20);
+
+            LocalDate lastClock = timeService.findLastClockByDoctorId(doctorId).toLocalDate();
+
+            timeService.createDoctorClocks(doctor, lastClock.plusDays(1), futureDate);
+            timeService.deleteOldClocks(doctorId, 10);
+        }
+
+        return doctor;
     }
 
     public Doctor createDoctor(DoctorRequest doctorRequest) {
@@ -37,59 +53,13 @@ public class DoctorService {
 
         doctorRepository.save(doctor);
 
-        createDoctorClocks(doctor);
+        LocalDate currentDate = LocalDate.now();
+        LocalDate futureDate = currentDate.plusDays(20);
+
+        timeService.createDoctorClocks(doctor, currentDate.plusDays(1), futureDate);
 
         return doctor;
     }
 
-    public void createDoctorClocks(Doctor doctor) {
-
-        LocalDate currentDate = LocalDate.now();
-
-        // 20 gün sonrasının tarihini hesapla
-        LocalDate futureDate = currentDate.plusDays(20);
-
-        // Hafta sonlarını içermeyen günleri hesapla
-        List<LocalDate> workDays = calculateWorkDays(currentDate, futureDate);
-
-        // Randevu saatlerini belirle
-        List<LocalTime> clocks = generateClocks();
-
-        // Her çalışma günü için randevu oluştur
-        for (LocalDate date : workDays) {
-            for (LocalTime time : clocks) {
-                TimeRequest timeRequest = new TimeRequest();
-                timeRequest.setDoctor(doctor);
-                LocalDateTime dateTime = LocalDateTime.of(date, time);
-                timeRequest.setTime(dateTime);
-
-                timeService.createTime(timeRequest);
-            }
-        }
-
-    }
-
-    private List<LocalDate> calculateWorkDays(LocalDate startDate, LocalDate endDate) {
-        List<LocalDate> workDays = new ArrayList<>();
-        LocalDate date = startDate.plusDays(1);
-        while (!date.isAfter(endDate)) {
-            if (date.getDayOfWeek() != DayOfWeek.SATURDAY && date.getDayOfWeek() != DayOfWeek.SUNDAY) {
-                workDays.add(date);
-            }
-            date = date.plusDays(1);
-        }
-        return workDays;
-    }
-
-    private List<LocalTime> generateClocks() {
-        List<LocalTime> appointmentTimes = new ArrayList<>();
-        LocalTime startTime = LocalTime.of(9, 0);
-        LocalTime endTime = LocalTime.of(16, 0);
-        while (!startTime.isAfter(endTime)) {
-            appointmentTimes.add(startTime);
-            startTime = startTime.plusHours(1);
-        }
-        return appointmentTimes;
-    }
 
 }

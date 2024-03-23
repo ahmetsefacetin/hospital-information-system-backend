@@ -21,7 +21,8 @@ public class PatientController {
 
     @GetMapping
     public List<PatientResponse> getAllPatients() {
-        return patientService.getAllPatients();
+        List<Patient> patients = patientService.getAllPatients();
+        return patients.stream().map(PatientResponse::new).toList();
     }
 
     @GetMapping("/{patientId}")

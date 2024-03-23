@@ -2,13 +2,13 @@ package com.cetin.hospital.controller;
 
 import com.cetin.hospital.model.Doctor;
 import com.cetin.hospital.request.DoctorRequest;
+import com.cetin.hospital.response.DoctorResponse;
 import com.cetin.hospital.service.DoctorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/doctors")
@@ -19,6 +19,16 @@ public class DoctorController {
         this.doctorService = doctorService;
     }
 
+    @GetMapping
+    public List<DoctorResponse> getAllPatients() {
+        List<Doctor> doctors = doctorService.getAllDoctors();
+        return doctors.stream().map(DoctorResponse::new).toList();
+    }
+
+    @GetMapping("/{doctorId}")
+    public DoctorResponse getPatientById(@PathVariable Long doctorId) {
+        return new DoctorResponse(doctorService.getDoctorById(doctorId));
+    }
 
     @PostMapping
     public ResponseEntity<Doctor> createDoctor(@RequestBody DoctorRequest doctorRequest) {

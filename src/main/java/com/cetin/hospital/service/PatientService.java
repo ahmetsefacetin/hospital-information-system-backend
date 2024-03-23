@@ -19,9 +19,8 @@ public class PatientService {
         this.patientRepository = patientRepository;
     }
 
-    public List<PatientResponse> getAllPatients() {
-        List<Patient> patients = patientRepository.findAll();
-        return patients.stream().map(PatientResponse::new).toList();
+    public List<Patient> getAllPatients() {
+        return patientRepository.findAll();
     }
 
     public Patient getPatientById(Long patientId) {
