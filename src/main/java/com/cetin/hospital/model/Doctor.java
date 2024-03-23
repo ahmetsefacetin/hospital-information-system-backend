@@ -22,6 +22,7 @@ public class Doctor {
     private String TC;
     private String name;
     private String password;
+    private String specialty;
 
     @OneToMany(mappedBy = "doctor")
     private List<Time> clocks;

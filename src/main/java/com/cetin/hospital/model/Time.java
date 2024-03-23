@@ -28,9 +28,5 @@ public class Time {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Doctor doctor;
 
-    @OneToOne
-    @JoinColumn(name = "appointment_id")
-    private Appointment appointment;
-
     private Boolean status;
 }
