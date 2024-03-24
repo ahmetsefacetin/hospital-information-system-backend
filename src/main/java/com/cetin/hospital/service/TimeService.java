@@ -7,6 +7,7 @@ import com.cetin.hospital.repository.TimeRepository;
 import com.cetin.hospital.request.TimeRequest;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -15,7 +16,6 @@ import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TimeService {
@@ -27,6 +27,7 @@ public class TimeService {
         this.doctorRepository = doctorRepository;
     }
 
+    @Transactional
     public List<Time> getTimesByDoctorId(Long doctorId) {
         Doctor doctor = doctorRepository.findById(doctorId).orElseThrow(() -> new EntityNotFoundException("Invalid doctorId"));
 

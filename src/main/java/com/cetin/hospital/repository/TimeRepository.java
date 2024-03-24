@@ -18,6 +18,7 @@ public interface TimeRepository extends JpaRepository<Time, Long> {
     LocalDateTime findLastClockByDoctorId(@Param("doctorId") Long doctorId);
 
     @Modifying
-    @Query(value = "DELETE FROM Time t WHERE t.time < :cutOffDate AND t.doctor.id = :doctorId")
+    @Query("DELETE FROM Time t WHERE t.time < :cutOffDate AND t.doctor.id = :doctorId")
     void deleteOldClocks(@Param("cutOffDate") LocalDateTime cutOffDate, @Param("doctorId") Long doctorId);
+
 }

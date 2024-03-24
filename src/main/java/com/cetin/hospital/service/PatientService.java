@@ -3,7 +3,6 @@ package com.cetin.hospital.service;
 import com.cetin.hospital.model.Patient;
 import com.cetin.hospital.repository.PatientRepository;
 import com.cetin.hospital.request.PatientRequest;
-import com.cetin.hospital.response.PatientResponse;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
