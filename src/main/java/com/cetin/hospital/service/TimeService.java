@@ -44,6 +44,10 @@ public class TimeService {
         return timeRepository.findTimesByDoctorId(doctorId, now, endDate);
     }
 
+    public Time getTimeById(Long timeId) {
+        return timeRepository.findById(timeId).orElseThrow(() -> new EntityNotFoundException("Invalid timeId"));
+    }
+
     public void createTime(TimeRequest timeRequest) {
         Time clock = Time.builder().
                 time(timeRequest.getTime()).
