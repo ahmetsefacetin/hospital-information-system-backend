@@ -21,9 +21,6 @@ public class Drug {
     private Long id;
 
     private String name;
-    private String manufacturer;
-    private LocalDate expiryDate;
-    private int stockQuantity;
     private int price;
 
     @ManyToMany(mappedBy = "drugs")
