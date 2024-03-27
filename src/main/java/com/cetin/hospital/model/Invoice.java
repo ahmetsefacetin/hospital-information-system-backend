@@ -20,14 +20,14 @@ public class Invoice {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "patient_id")
+    @JoinColumn(name = "patient_id", nullable = false)
     private Patient patient;
 
     private int amount;
     private LocalDate dueDate;
 
     @OneToOne
-    @JoinColumn(name = "prescription_id")
+    @JoinColumn(name = "prescription_id", nullable = false)
     private Prescription prescription;
 
     private Boolean status;

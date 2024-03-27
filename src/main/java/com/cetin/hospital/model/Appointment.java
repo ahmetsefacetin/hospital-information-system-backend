@@ -18,14 +18,14 @@ public class Appointment {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "patient_id")
+    @JoinColumn(name = "patient_id", nullable = false)
     private Patient patient;
 
     @OneToOne
-    @JoinColumn(name = "doctor_id")
+    @JoinColumn(name = "doctor_id", nullable = false)
     private Doctor doctor;
 
     @OneToOne
-    @JoinColumn(name = "time_id")
+    @JoinColumn(name = "time_id", nullable = false)
     private Time time;
 }

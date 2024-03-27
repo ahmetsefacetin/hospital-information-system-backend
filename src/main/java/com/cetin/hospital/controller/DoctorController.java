@@ -20,13 +20,13 @@ public class DoctorController {
     }
 
     @GetMapping
-    public List<DoctorResponse> getAllPatients() {
+    public List<DoctorResponse> getAllDoctors() {
         List<Doctor> doctors = doctorService.getAllDoctors();
         return doctors.stream().map(DoctorResponse::new).toList();
     }
 
     @GetMapping("/{doctorId}")
-    public DoctorResponse getPatientById(@PathVariable Long doctorId) {
+    public DoctorResponse getDoctorById(@PathVariable Long doctorId) {
         return new DoctorResponse(doctorService.getDoctorById(doctorId));
     }
 
@@ -37,5 +37,19 @@ public class DoctorController {
             return new ResponseEntity<>(doctor, HttpStatus.CREATED);
         }
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @PutMapping("/{doctorId}")
+    public ResponseEntity<Doctor> updateDoctorById(@PathVariable Long doctorId, @RequestBody DoctorRequest doctorRequest) {
+        Doctor doctor = doctorService.updateDoctorById(doctorId, doctorRequest);
+        if (doctor != null) {
+            return new ResponseEntity<>(doctor, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @DeleteMapping("/{doctorId}")
+    public void deleteDoctorById(@PathVariable Long doctorId) {
+        doctorService.deleteDoctorById(doctorId);
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DoctorService {
@@ -61,5 +62,20 @@ public class DoctorService {
         return doctor;
     }
 
+    public Doctor updateDoctorById(Long doctorId, DoctorRequest doctorRequest) {
+        Optional<Doctor> doctor = doctorRepository.findById(doctorId);
+        if (doctor.isPresent()) {
+            Doctor foundDoctor = doctor.get();
+            foundDoctor.setTC(doctorRequest.getTC());
+            foundDoctor.setName(doctorRequest.getName());
+            foundDoctor.setPassword(doctorRequest.getPassword());
+            foundDoctor.setSpecialty(doctorRequest.getSpecialty());
+            return doctorRepository.save(foundDoctor);
+        } else throw new EntityNotFoundException("Invalid doctorId");
+    }
+
+    public void deleteDoctorById(Long doctorId) {
+        doctorRepository.deleteById(doctorId);
+    }
 
 }

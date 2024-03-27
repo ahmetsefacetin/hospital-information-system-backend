@@ -3,8 +3,6 @@ package com.cetin.hospital.response;
 import com.cetin.hospital.model.Doctor;
 import lombok.Data;
 
-import java.util.List;
-
 @Data
 public class DoctorResponse {
     private Long id;

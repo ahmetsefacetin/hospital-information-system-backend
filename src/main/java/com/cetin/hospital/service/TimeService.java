@@ -58,6 +58,12 @@ public class TimeService {
         timeRepository.save(clock);
     }
 
+    public void updateTimeStatus(Long timeId, Boolean status) {
+        Time time = getTimeById(timeId);
+        time.setStatus(status);
+        timeRepository.save(time);
+    }
+
     public void createDoctorClocks(Doctor doctor, LocalDate startDate, LocalDate endDate) {
 
         List<LocalDate> workDays = calculateWorkDays(startDate, endDate);
