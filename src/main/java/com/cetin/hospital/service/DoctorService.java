@@ -66,10 +66,10 @@ public class DoctorService {
         Optional<Doctor> doctor = doctorRepository.findById(doctorId);
         if (doctor.isPresent()) {
             Doctor foundDoctor = doctor.get();
-            foundDoctor.setTC(doctorRequest.getTC());
-            foundDoctor.setName(doctorRequest.getName());
-            foundDoctor.setPassword(doctorRequest.getPassword());
-            foundDoctor.setSpecialty(doctorRequest.getSpecialty());
+            if (doctorRequest.getTC() != null) foundDoctor.setTC(doctorRequest.getTC());
+            if (doctorRequest.getName() != null) foundDoctor.setName(doctorRequest.getName());
+            if (doctorRequest.getPassword() != null) foundDoctor.setPassword(doctorRequest.getPassword());
+            if (doctorRequest.getSpecialty() != null) foundDoctor.setSpecialty(doctorRequest.getSpecialty());
             return doctorRepository.save(foundDoctor);
         } else throw new EntityNotFoundException("Invalid doctorId");
     }

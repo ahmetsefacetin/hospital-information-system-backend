@@ -41,9 +41,9 @@ public class PatientService {
         Optional<Patient> patient = patientRepository.findById(patientId);
         if (patient.isPresent()) {
             Patient foundPatient = patient.get();
-            foundPatient.setTC(patientRequest.getTC());
-            foundPatient.setName(patientRequest.getName());
-            foundPatient.setPassword(patientRequest.getPassword());
+            if (patientRequest.getTC() != null) foundPatient.setTC(patientRequest.getTC());
+            if (patientRequest.getName() != null) foundPatient.setName(patientRequest.getName());
+            if (patientRequest.getPassword() != null) foundPatient.setPassword(patientRequest.getPassword());
             return patientRepository.save(foundPatient);
         } else throw new EntityNotFoundException("Invalid patientId");
     }

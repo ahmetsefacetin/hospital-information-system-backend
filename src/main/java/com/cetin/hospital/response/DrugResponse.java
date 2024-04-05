@@ -1,0 +1,17 @@
+package com.cetin.hospital.response;
+
+import com.cetin.hospital.model.Drug;
+import lombok.Data;
+
+@Data
+public class DrugResponse {
+    private Long id;
+    private String name;
+    private Integer price;
+
+    public DrugResponse(Drug drug) {
+        this.id = drug.getId();
+        this.name = drug.getName();
+        this.price = drug.getPrice();
+    }
+}

@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -21,7 +20,7 @@ public class Drug {
     private Long id;
 
     private String name;
-    private int price;
+    private Integer price;
 
     @ManyToMany(mappedBy = "drugs")
     private List<Prescription> prescriptions;
