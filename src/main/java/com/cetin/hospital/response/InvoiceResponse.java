@@ -7,12 +7,14 @@ import java.time.LocalDate;
 
 @Data
 public class InvoiceResponse {
+    private Long id;
     private Long patientId;
     private Integer amount;
     private LocalDate dueDate;
     private Long prescriptionId;
 
     public InvoiceResponse(Invoice invoice) {
+        this.id = invoice.getId();
         this.patientId = invoice.getPatient().getId();
         this.amount = invoice.getAmount();
         this.dueDate = invoice.getDueDate();

@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Data
@@ -17,12 +19,14 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "patient_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Patient patient;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "doctor_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Doctor doctor;
 
     @OneToOne

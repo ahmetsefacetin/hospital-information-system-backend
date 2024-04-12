@@ -41,9 +41,15 @@ public class InvoiceService {
             throw new EntityNotFoundException("Invalid patientId");
         }
         Integer amount = 0;
-        for (Drug drug : prescription.getDrugs()) {
-            amount += drug.getPrice();
+
+        /*
+        if (prescription.getDrugs() != null) {
+            for (Drug drug : prescription.getDrugs()) {
+                amount += drug.getPrice();
+            }
         }
+        */
+
         Invoice invoice = Invoice.builder().
                 patient(patient).
                 dueDate(LocalDate.now()).
