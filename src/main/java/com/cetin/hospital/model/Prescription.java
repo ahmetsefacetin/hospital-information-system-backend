@@ -1,5 +1,6 @@
 package com.cetin.hospital.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,11 +28,7 @@ public class Prescription {
     @JoinColumn(name = "doctor_id", nullable = false)
     private Doctor doctor;
 
-    @ManyToMany
-    @JoinTable(
-            name = "prescription_drug",
-            joinColumns = @JoinColumn(name = "prescription_id"),
-            inverseJoinColumns = @JoinColumn(name = "drug_id")
-    )
+    @OneToMany(mappedBy = "prescription")
+    @JsonIgnore
     private List<Drug> drugs;
 }

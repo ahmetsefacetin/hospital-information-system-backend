@@ -106,7 +106,7 @@ public class TimeService {
         return clocks;
     }
 
-    public void deleteOldClocks(Long doctorId, int cutOffDateLimit) {
+    public void deleteOldClocks(Long doctorId, Integer cutOffDateLimit) {
         LocalDateTime cutOffDate = LocalDateTime.now().minusDays(cutOffDateLimit);
         timeRepository.deleteOldClocks(cutOffDate, doctorId);
     }
@@ -115,7 +115,7 @@ public class TimeService {
         return timeRepository.findLastClockByDoctorId(doctorId);
     }
 
-    public boolean isLastClockApproaching(Long doctorId, int thresholdDays) {
+    public boolean isLastClockApproaching(Long doctorId, Integer thresholdDays) {
         LocalDateTime currentDate = LocalDateTime.now();
         LocalDateTime lastClock = timeRepository.findLastClockByDoctorId(doctorId);
         long daysUntilLastDay = ChronoUnit.DAYS.between(currentDate, lastClock);

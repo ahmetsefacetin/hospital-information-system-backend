@@ -23,12 +23,10 @@ public class Invoice {
     @JoinColumn(name = "patient_id", nullable = false)
     private Patient patient;
 
-    private int amount;
+    private Integer amount;
     private LocalDate dueDate;
 
     @OneToOne
     @JoinColumn(name = "prescription_id", nullable = false)
     private Prescription prescription;
-
-    private Boolean status;
 }

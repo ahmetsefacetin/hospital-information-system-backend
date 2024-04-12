@@ -2,9 +2,10 @@ package com.cetin.hospital.request;
 
 import lombok.Data;
 
+import java.time.LocalDate;
+
 @Data
-public class DrugRequest {
-    private String name;
-    private Integer price;
+public class InvoiceRequest {
+    private Long patientId;
     private Long prescriptionId;
 }

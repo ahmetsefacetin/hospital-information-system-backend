@@ -8,5 +8,5 @@ import java.util.List;
 public class PrescriptionRequest {
     private Long doctorId;
     private Long patientId;
-    private List<Integer> drugId;
+    private List<String> drugNames;
 }

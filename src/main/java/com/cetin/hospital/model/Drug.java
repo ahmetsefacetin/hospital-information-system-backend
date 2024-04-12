@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.List;
 
@@ -22,6 +24,8 @@ public class Drug {
     private String name;
     private Integer price;
 
-    @ManyToMany(mappedBy = "drugs")
-    private List<Prescription> prescriptions;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "prescription_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Prescription prescription;
 }

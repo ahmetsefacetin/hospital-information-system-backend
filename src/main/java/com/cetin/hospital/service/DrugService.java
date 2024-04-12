@@ -27,23 +27,11 @@ public class DrugService {
     }
 
     public Drug createDrug(DrugRequest drugRequest) {
-        Drug drug = drugRepository.findByName(drugRequest.getName());
-        if (drug != null) throw new EntityExistsException("There is already a drug with this name.");
-        drug = Drug.builder().
+        Drug drug = Drug.builder().
                 name(drugRequest.getName()).
                 price(drugRequest.getPrice()).
                 build();
         return drugRepository.save(drug);
-    }
-
-    public Drug updateDrugById(Long drugId, DrugRequest drugRequest) {
-        Optional<Drug> drug = drugRepository.findById(drugId);
-        if (drug.isPresent()) {
-            Drug foundDrug = drug.get();
-            if (drugRequest.getName() != null) foundDrug.setName(drugRequest.getName());
-            if (drugRequest.getPrice() != null) foundDrug.setPrice(drugRequest.getPrice());
-            return drugRepository.save(foundDrug);
-        } else throw new EntityNotFoundException("Invalid drugId");
     }
 
     public void deleteDrugById(Long drugId) {
