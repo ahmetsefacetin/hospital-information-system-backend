@@ -1,7 +1,9 @@
 package com.cetin.hospital.service;
 
 import com.cetin.hospital.model.Drug;
+import com.cetin.hospital.model.Prescription;
 import com.cetin.hospital.repository.DrugRepository;
+import com.cetin.hospital.repository.PrescriptionRepository;
 import com.cetin.hospital.request.DrugRequest;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -13,9 +15,11 @@ import java.util.Optional;
 @Service
 public class DrugService {
     private final DrugRepository drugRepository;
+    private final PrescriptionRepository prescriptionRepository;
 
-    public DrugService(DrugRepository drugRepository) {
+    public DrugService(DrugRepository drugRepository, PrescriptionRepository prescriptionRepository) {
         this.drugRepository = drugRepository;
+        this.prescriptionRepository = prescriptionRepository;
     }
 
     public List<Drug> getAllDrugs() {
@@ -27,9 +31,11 @@ public class DrugService {
     }
 
     public Drug createDrug(DrugRequest drugRequest) {
+        Prescription prescription = prescriptionRepository.findById(drugRequest.getPrescriptionId()).orElseThrow(() -> new EntityNotFoundException("Invalid prescriptionId"));
         Drug drug = Drug.builder().
                 name(drugRequest.getName()).
                 price(drugRequest.getPrice()).
+                prescription(prescription).
                 build();
         return drugRepository.save(drug);
     }

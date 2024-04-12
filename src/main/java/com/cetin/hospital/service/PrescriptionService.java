@@ -7,6 +7,7 @@ import com.cetin.hospital.request.InvoiceRequest;
 import com.cetin.hospital.request.PrescriptionRequest;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -36,25 +37,25 @@ public class PrescriptionService {
     }
 
     public Prescription createPrescription(PrescriptionRequest prescriptionRequest) {
-       /* Doctor doctor = doctorService.getDoctorById(prescriptionRequest.getDoctorId());
+        Doctor doctor = doctorService.getDoctorById(prescriptionRequest.getDoctorId());
         Patient patient = patientService.getPatientById(prescriptionRequest.getPatientId());
         if (doctor == null || patient == null) {
             throw new EntityNotFoundException("Invalid doctorId or patientId");
         }
 
+        Prescription prescription = Prescription.builder().
+                doctor(doctor).
+                patient(patient).
+                build();
+        prescriptionRepository.save(prescription);
+
         List<Drug> drugs = prescriptionRequest.getDrugNames().stream().map(drugName -> {
             DrugRequest drugRequest = new DrugRequest();
             drugRequest.setName(drugName);
             drugRequest.setPrice(30);
+            drugRequest.setPrescriptionId(prescription.getId());
             return drugService.createDrug(drugRequest);
         }).toList();
-
-        Prescription prescription = Prescription.builder().
-                doctor(doctor).
-                patient(patient).
-                drugs(drugs).
-                build();
-        prescriptionRepository.save(prescription);
 
         InvoiceRequest invoiceRequest = new InvoiceRequest();
         invoiceRequest.setPrescriptionId(prescription.getId());
@@ -62,7 +63,5 @@ public class PrescriptionService {
 
         invoiceService.createInvoice(invoiceRequest);
         return prescription;
-        */
-        return null;
     }
 }
