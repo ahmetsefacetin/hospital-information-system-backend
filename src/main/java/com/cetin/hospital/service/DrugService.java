@@ -5,12 +5,10 @@ import com.cetin.hospital.model.Prescription;
 import com.cetin.hospital.repository.DrugRepository;
 import com.cetin.hospital.repository.PrescriptionRepository;
 import com.cetin.hospital.request.DrugRequest;
-import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class DrugService {

@@ -7,7 +7,6 @@ import com.cetin.hospital.request.InvoiceRequest;
 import com.cetin.hospital.request.PrescriptionRequest;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
