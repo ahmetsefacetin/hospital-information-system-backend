@@ -38,9 +38,6 @@ public class PrescriptionService {
     public Prescription createPrescription(PrescriptionRequest prescriptionRequest) {
         Doctor doctor = doctorService.getDoctorById(prescriptionRequest.getDoctorId());
         Patient patient = patientService.getPatientById(prescriptionRequest.getPatientId());
-        if (doctor == null || patient == null) {
-            throw new EntityNotFoundException("Invalid doctorId or patientId");
-        }
 
         Prescription prescription = Prescription.builder().
                 doctor(doctor).
@@ -48,13 +45,13 @@ public class PrescriptionService {
                 build();
         prescriptionRepository.save(prescription);
 
-        List<Drug> drugs = prescriptionRequest.getDrugNames().stream().map(drugName -> {
+        prescriptionRequest.getDrugNames().stream().map(drugName -> {
             DrugRequest drugRequest = new DrugRequest();
             drugRequest.setName(drugName);
             drugRequest.setPrice(30);
             drugRequest.setPrescriptionId(prescription.getId());
             return drugService.createDrug(drugRequest);
-        }).toList();
+        });
 
         InvoiceRequest invoiceRequest = new InvoiceRequest();
         invoiceRequest.setPrescriptionId(prescription.getId());

@@ -24,6 +24,10 @@ public class DrugService {
         return drugRepository.findAll();
     }
 
+    public List<Drug> getDrugsByPrescriptionId(Long prescriptionId) {
+        return drugRepository.findByPrescriptionId(prescriptionId);
+    }
+
     public Drug getDrugById(Long drugId) {
         return drugRepository.findById(drugId).orElseThrow(() -> new EntityNotFoundException("Invalid drugId"));
     }

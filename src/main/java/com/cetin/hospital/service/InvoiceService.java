@@ -18,11 +18,13 @@ public class InvoiceService {
     private final InvoiceRepository invoiceRepository;
     private final PatientService patientService;
     private final PrescriptionRepository prescriptionRepository;
+    private final DrugService drugService;
 
-    public InvoiceService(InvoiceRepository invoiceRepository, PatientService patientService, PrescriptionRepository prescriptionRepository) {
+    public InvoiceService(InvoiceRepository invoiceRepository, PatientService patientService, PrescriptionRepository prescriptionRepository, DrugService drugService) {
         this.invoiceRepository = invoiceRepository;
         this.patientService = patientService;
         this.prescriptionRepository = prescriptionRepository;
+        this.drugService = drugService;
     }
 
     public List<Invoice> getAllInvoices() {
@@ -37,18 +39,12 @@ public class InvoiceService {
         Patient patient = patientService.getPatientById(invoiceRequest.getPatientId());
         Prescription prescription = prescriptionRepository.findById(invoiceRequest.getPrescriptionId())
                 .orElseThrow(() -> new EntityNotFoundException("Invalid prescriptionId"));
-        if (patient == null) {
-            throw new EntityNotFoundException("Invalid patientId");
-        }
-        Integer amount = 0;
 
-        /*
-        if (prescription.getDrugs() != null) {
-            for (Drug drug : prescription.getDrugs()) {
-                amount += drug.getPrice();
-            }
+        List<Drug> prescriptionDrugs = drugService.getDrugsByPrescriptionId(prescription.getId());
+        Integer amount = 0;
+        for (Drug drug : prescriptionDrugs) {
+            amount += drug.getPrice();
         }
-        */
 
         Invoice invoice = Invoice.builder().
                 patient(patient).
