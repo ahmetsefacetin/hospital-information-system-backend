@@ -26,6 +26,10 @@ public class PatientService {
         return patientRepository.findById(patientId).orElseThrow(() -> new EntityNotFoundException("Invalid patientId"));
     }
 
+    public Patient getPatientByTC(String patientTC) {
+        return getPatientById(patientRepository.findByTC(patientTC).getId());
+    }
+
     public Patient createPatient(PatientRequest patientRequest) {
         Patient patient = patientRepository.findByTC(patientRequest.getTC());
         if (patient != null) throw new EntityExistsException("There is already a patient with this TC.");

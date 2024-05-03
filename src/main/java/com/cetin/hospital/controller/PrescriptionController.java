@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/prescriptions")
@@ -19,7 +20,7 @@ public class PrescriptionController {
         this.prescriptionService = prescriptionService;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<PrescriptionResponse> getAllPrescriptions() {
         List<Prescription> prescriptions = prescriptionService.getAllPrescriptions();
         return prescriptions.stream().map(PrescriptionResponse::new).toList();
@@ -28,6 +29,13 @@ public class PrescriptionController {
     @GetMapping("/{prescriptionId}")
     public PrescriptionResponse getPrescriptionById(@PathVariable Long prescriptionId) {
         return new PrescriptionResponse(prescriptionService.getPrescriptionById(prescriptionId));
+    }
+
+    @GetMapping
+    public List<PrescriptionResponse> getPrescriptionByTC(@RequestParam Optional<String> patientTC,
+                                                          @RequestParam Optional<String> doctorTC) {
+        List<Prescription> prescriptions = prescriptionService.getPrescriptionsByTC(patientTC, doctorTC);
+        return prescriptions.stream().map(PrescriptionResponse::new).toList();
     }
 
     @PostMapping

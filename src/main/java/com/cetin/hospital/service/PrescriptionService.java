@@ -9,6 +9,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PrescriptionService {
@@ -33,6 +34,18 @@ public class PrescriptionService {
 
     public Prescription getPrescriptionById(Long prescriptionId) {
         return prescriptionRepository.findById(prescriptionId).orElseThrow(() -> new EntityNotFoundException("Invalid prescriptionId"));
+    }
+
+    public List<Prescription> getPrescriptionsByTC(Optional<String> patientTC, Optional<String> doctorTC) {
+        List<Prescription> prescriptions;
+        if (patientTC.isPresent() && doctorTC.isPresent()) {
+            prescriptions = prescriptionRepository.findByPatientTCAndDoctorTC(patientTC.get(), doctorTC.get());
+        } else if (patientTC.isPresent()) {
+            prescriptions = prescriptionRepository.findByPatientTC(patientTC.get());
+        } else {
+            prescriptions = prescriptionRepository.findByDoctorTC(doctorTC.get());
+        }
+        return prescriptions;
     }
 
     public Prescription createPrescription(PrescriptionRequest prescriptionRequest) {

@@ -35,6 +35,10 @@ public class InvoiceService {
         return invoiceRepository.findById(invoiceId).orElseThrow(() -> new EntityNotFoundException("Invalid invoiceId"));
     }
 
+    public Invoice getInvoiceByPrescriptionId(Long prescriptionId) {
+        return getInvoiceById(invoiceRepository.findByPrescriptionId(prescriptionId).getId());
+    }
+
     public Invoice createInvoice(InvoiceRequest invoiceRequest) {
         Patient patient = patientService.getPatientById(invoiceRequest.getPatientId());
         Prescription prescription = prescriptionRepository.findById(invoiceRequest.getPrescriptionId())

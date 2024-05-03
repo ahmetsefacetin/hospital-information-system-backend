@@ -42,6 +42,10 @@ public class DoctorService {
         return doctor;
     }
 
+    public Doctor getDoctorByTC(String doctorTC) {
+        return getDoctorById(doctorRepository.findByTC(doctorTC).getId());
+    }
+
     public Doctor createDoctor(DoctorRequest doctorRequest) {
         Doctor doctor = doctorRepository.findByTC(doctorRequest.getTC());
         if (doctor != null) throw new EntityExistsException("There is already a doctor with this TC.");

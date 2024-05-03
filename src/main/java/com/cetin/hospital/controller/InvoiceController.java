@@ -3,10 +3,7 @@ package com.cetin.hospital.controller;
 import com.cetin.hospital.model.Invoice;
 import com.cetin.hospital.response.InvoiceResponse;
 import com.cetin.hospital.service.InvoiceService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,7 +16,7 @@ public class InvoiceController {
         this.invoiceService = invoiceService;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<InvoiceResponse> getAllInvoices() {
         List<Invoice> invoices = invoiceService.getAllInvoices();
         return invoices.stream().map(InvoiceResponse::new).toList();
@@ -30,4 +27,8 @@ public class InvoiceController {
         return new InvoiceResponse(invoiceService.getInvoiceById(invoiceId));
     }
 
+    @GetMapping
+    public InvoiceResponse getInvoiceByPrescriptionId(@RequestParam Long prescriptionId) {
+        return new InvoiceResponse(invoiceService.getInvoiceByPrescriptionId(prescriptionId));
+    }
 }

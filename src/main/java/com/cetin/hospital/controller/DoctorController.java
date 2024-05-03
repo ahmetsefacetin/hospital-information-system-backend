@@ -19,7 +19,7 @@ public class DoctorController {
         this.doctorService = doctorService;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<DoctorResponse> getAllDoctors() {
         List<Doctor> doctors = doctorService.getAllDoctors();
         return doctors.stream().map(DoctorResponse::new).toList();
@@ -28,6 +28,11 @@ public class DoctorController {
     @GetMapping("/{doctorId}")
     public DoctorResponse getDoctorById(@PathVariable Long doctorId) {
         return new DoctorResponse(doctorService.getDoctorById(doctorId));
+    }
+
+    @GetMapping
+    public DoctorResponse getDoctorByTC(@RequestParam String TC) {
+        return new DoctorResponse(doctorService.getDoctorByTC(TC));
     }
 
     @PostMapping

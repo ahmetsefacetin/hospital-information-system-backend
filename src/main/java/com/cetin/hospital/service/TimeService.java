@@ -45,6 +45,11 @@ public class TimeService {
         return timeRepository.findTimesByDoctorId(doctorId, now, endDate);
     }
 
+    public List<Time> getTimesByDoctorTC(String doctorTC) {
+        Doctor doctor = doctorRepository.findByTC(doctorTC);
+        return getTimesByDoctorId(doctor.getId());
+    }
+
     public Time getTimeById(Long timeId) {
         return timeRepository.findById(timeId).orElseThrow(() -> new EntityNotFoundException("Invalid timeId"));
     }
