@@ -58,13 +58,13 @@ public class PrescriptionService {
                 build();
         prescriptionRepository.save(prescription);
 
-        prescriptionRequest.getDrugNames().stream().map(drugName -> {
+        for (String drugName : prescriptionRequest.getDrugNames()) {
             DrugRequest drugRequest = new DrugRequest();
             drugRequest.setName(drugName);
             drugRequest.setPrice(30);
             drugRequest.setPrescriptionId(prescription.getId());
-            return drugService.createDrug(drugRequest);
-        });
+            drugService.createDrug(drugRequest);
+        }
 
         InvoiceRequest invoiceRequest = new InvoiceRequest();
         invoiceRequest.setPrescriptionId(prescription.getId());
