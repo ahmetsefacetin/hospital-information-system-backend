@@ -5,6 +5,7 @@ import com.cetin.hospital.model.Time;
 import com.cetin.hospital.repository.DoctorRepository;
 import com.cetin.hospital.repository.TimeRepository;
 import com.cetin.hospital.request.TimeRequest;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,6 +48,7 @@ public class TimeService {
 
     public List<Time> getTimesByDoctorTC(String doctorTC) {
         Doctor doctor = doctorRepository.findByTC(doctorTC);
+        if (doctor == null) throw new EntityNotFoundException("Invalid doctor TC.");
         return getTimesByDoctorId(doctor.getId());
     }
 

@@ -16,9 +16,15 @@ public class TimeController {
         this.timeService = timeService;
     }
 
-    @GetMapping
+    @GetMapping("/doctorId/{doctorId}")
     public List<TimeResponse> getTimesByDoctorId(@RequestParam Long doctorId) {
         List<Time> times = timeService.getTimesByDoctorId(doctorId);
+        return times.stream().map(TimeResponse::new).toList();
+    }
+
+    @GetMapping
+    public List<TimeResponse>  getTimesByDoctorTc(@RequestParam String TC) {
+        List<Time> times = timeService.getTimesByDoctorTC(TC);
         return times.stream().map(TimeResponse::new).toList();
     }
 
