@@ -2,7 +2,9 @@ package com.cetin.hospital.service;
 
 import com.cetin.hospital.model.Doctor;
 
+import com.cetin.hospital.model.Patient;
 import com.cetin.hospital.repository.DoctorRepository;
+import com.cetin.hospital.repository.PatientRepository;
 import com.cetin.hospital.request.DoctorRequest;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -16,10 +18,12 @@ import java.util.Optional;
 public class DoctorService {
     private final DoctorRepository doctorRepository;
     private final TimeService timeService;
+    private final PatientRepository patientRepository;
 
-    public DoctorService(DoctorRepository doctorRepository, TimeService timeService) {
+    public DoctorService(DoctorRepository doctorRepository, TimeService timeService, PatientRepository patientRepository) {
         this.doctorRepository = doctorRepository;
         this.timeService = timeService;
+        this.patientRepository = patientRepository;
     }
 
     public List<Doctor> getAllDoctors() {
@@ -48,7 +52,8 @@ public class DoctorService {
 
     public Doctor createDoctor(DoctorRequest doctorRequest) {
         Doctor doctor = doctorRepository.findByTC(doctorRequest.getTC());
-        if (doctor != null) throw new EntityExistsException("There is already a doctor with this TC.");
+        Patient patient = patientRepository.findByTC(doctorRequest.getTC());
+        if (doctor != null && patient != null) throw new EntityExistsException("There is already a person with this TC.");
         doctor = Doctor.builder().
                 TC(doctorRequest.getTC()).
                 name(doctorRequest.getName()).
