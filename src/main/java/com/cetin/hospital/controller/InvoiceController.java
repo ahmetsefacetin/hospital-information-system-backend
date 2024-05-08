@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/invoices")
+@CrossOrigin(origins = "*")
 public class InvoiceController {
     private final InvoiceService invoiceService;
 

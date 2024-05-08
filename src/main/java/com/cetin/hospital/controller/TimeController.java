@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/times")
+@CrossOrigin(origins = "*")
 public class TimeController {
     private final TimeService timeService;
 
