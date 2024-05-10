@@ -24,7 +24,7 @@ public class TimeController {
     }
 
     @GetMapping("/doctorId/{doctorId}")
-    public List<TimeResponse> getTimesByDoctorId(@RequestParam Long doctorId) {
+    public List<TimeResponse> getTimesByDoctorId(@PathVariable Long doctorId) {
         List<Time> times = timeService.getTimesByDoctorId(doctorId);
         return times.stream().map(TimeResponse::new).toList();
     }
