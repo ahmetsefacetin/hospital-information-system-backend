@@ -28,6 +28,10 @@ public class TimeService {
         this.doctorRepository = doctorRepository;
     }
 
+    public List<Time> getAllTimes() {
+        return timeRepository.findAll();
+    }
+
     @Transactional
     public List<Time> getTimesByDoctorId(Long doctorId) {
         Doctor doctor = doctorRepository.findById(doctorId).orElseThrow(() -> new EntityNotFoundException("Invalid doctorId"));

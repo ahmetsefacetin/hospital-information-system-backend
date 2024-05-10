@@ -20,6 +20,12 @@ public class AppointmentController {
         this.appointmentService = appointmentService;
     }
 
+    @GetMapping("/all")
+    public List<AppointmentResponse> getAllAppointments() {
+        List<Appointment> appointments = appointmentService.getAllAppointments();
+        return appointments.stream().map(AppointmentResponse::new).toList();
+    }
+
     @GetMapping
     public List<AppointmentResponse> getAppointmentsByDoctorId(@RequestParam Long doctorId) {
         List<Appointment> appointments = appointmentService.getAppointmentsByDoctorId(doctorId);

@@ -26,6 +26,10 @@ public class AppointmentService {
         this.timeService = timeService;
     }
 
+    public List<Appointment> getAllAppointments() {
+        return appointmentRepository.findAll();
+    }
+
     public List<Appointment> getAppointmentsByDoctorId(Long doctorId) {
         Doctor doctor = doctorService.getDoctorById(doctorId);
         return appointmentRepository.findByDoctorId(doctorId);

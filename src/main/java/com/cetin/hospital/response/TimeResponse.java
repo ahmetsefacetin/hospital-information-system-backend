@@ -1,5 +1,6 @@
 package com.cetin.hospital.response;
 
+import com.cetin.hospital.model.Doctor;
 import com.cetin.hospital.model.Time;
 import lombok.Data;
 
@@ -9,13 +10,13 @@ import java.time.LocalDateTime;
 public class TimeResponse {
     private Long id;
     private LocalDateTime time;
-    private Long doctorId;
+    private Doctor doctor;
     private Boolean status;
 
     public TimeResponse(Time time) {
         this.id = time.getId();
         this.time = time.getTime();
-        this.doctorId = time.getDoctor().getId();
+        this.doctor = time.getDoctor();
         this.status = time.getStatus();
     }
 }
