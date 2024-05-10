@@ -37,7 +37,7 @@ public class PatientService {
     public Patient createPatient(PatientRequest patientRequest) {
         Patient patient = patientRepository.findByTC(patientRequest.getTC());
         Doctor doctor = doctorRepository.findByTC(patientRequest.getTC());
-        if (patient != null && doctor != null) throw new EntityExistsException("There is already a person with this TC.");
+        if (patient != null || doctor != null) throw new EntityExistsException("There is already a person with this TC.");
         patient = Patient.builder().
                 TC(patientRequest.getTC()).
                 name(patientRequest.getName()).
