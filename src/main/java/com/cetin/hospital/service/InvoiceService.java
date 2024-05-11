@@ -52,7 +52,7 @@ public class InvoiceService {
 
         Invoice invoice = Invoice.builder().
                 patient(patient).
-                dueDate(LocalDate.now()).
+                dueDate(LocalDate.now().plusDays(10)).
                 amount(amount).
                 prescription(prescription).
                 build();
