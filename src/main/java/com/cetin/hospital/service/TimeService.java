@@ -5,12 +5,10 @@ import com.cetin.hospital.model.Time;
 import com.cetin.hospital.repository.DoctorRepository;
 import com.cetin.hospital.repository.TimeRepository;
 import com.cetin.hospital.request.TimeRequest;
-import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.print.Doc;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
