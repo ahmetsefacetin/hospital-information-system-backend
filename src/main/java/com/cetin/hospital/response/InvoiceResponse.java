@@ -1,6 +1,7 @@
 package com.cetin.hospital.response;
 
 import com.cetin.hospital.model.Invoice;
+import com.cetin.hospital.model.Prescription;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -11,13 +12,13 @@ public class InvoiceResponse {
     private Long patientId;
     private Integer amount;
     private LocalDate dueDate;
-    private Long prescriptionId;
+    private Prescription prescription;
 
     public InvoiceResponse(Invoice invoice) {
         this.id = invoice.getId();
         this.patientId = invoice.getPatient().getId();
         this.amount = invoice.getAmount();
         this.dueDate = invoice.getDueDate();
-        this.prescriptionId = invoice.getPrescription().getId();
+        this.prescription = invoice.getPrescription();
     }
 }
