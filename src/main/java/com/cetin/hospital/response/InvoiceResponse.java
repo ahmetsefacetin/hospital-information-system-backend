@@ -12,13 +12,13 @@ public class InvoiceResponse {
     private Long patientId;
     private Integer amount;
     private LocalDate dueDate;
-    private Prescription prescription;
+    private PrescriptionResponse prescription;
 
     public InvoiceResponse(Invoice invoice) {
         this.id = invoice.getId();
         this.patientId = invoice.getPatient().getId();
         this.amount = invoice.getAmount();
         this.dueDate = invoice.getDueDate();
-        this.prescription = invoice.getPrescription();
+        this.prescription = new PrescriptionResponse(invoice.getPrescription());
     }
 }
