@@ -1,7 +1,6 @@
 package com.cetin.hospital.response;
 
 import com.cetin.hospital.model.Invoice;
-import com.cetin.hospital.model.Prescription;
 import lombok.Data;
 
 import java.time.LocalDate;
