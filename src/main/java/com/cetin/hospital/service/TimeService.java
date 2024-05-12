@@ -10,6 +10,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.print.Doc;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -29,7 +30,14 @@ public class TimeService {
     }
 
     public List<Time> getAllTimes() {
-        return timeRepository.findAll();
+        List<Doctor> doctors = doctorRepository.findAll();
+
+        List<Time> times = new ArrayList<>();
+
+        for (Doctor doctor : doctors) {
+            times.addAll(getTimesByDoctorId(doctor.getId()));
+        }
+        return times;
     }
 
     @Transactional
