@@ -8,6 +8,7 @@ import com.cetin.hospital.repository.PatientRepository;
 import com.cetin.hospital.request.DoctorRequest;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -20,11 +21,13 @@ public class DoctorService {
     private final DoctorRepository doctorRepository;
     private final TimeService timeService;
     private final PatientRepository patientRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    public DoctorService(DoctorRepository doctorRepository, TimeService timeService, PatientRepository patientRepository) {
+    public DoctorService(DoctorRepository doctorRepository, TimeService timeService, PatientRepository patientRepository, BCryptPasswordEncoder passwordEncoder) {
         this.doctorRepository = doctorRepository;
         this.timeService = timeService;
         this.patientRepository = patientRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<Doctor> getAllDoctors() {
@@ -56,7 +59,7 @@ public class DoctorService {
     }
 
     public Doctor getDoctorByTC(String doctorTC) {
-        return getDoctorById(doctorRepository.findByTC(doctorTC).getId());
+        return doctorRepository.findByTC(doctorTC);
     }
 
     public Doctor createDoctor(DoctorRequest doctorRequest) {
@@ -66,7 +69,7 @@ public class DoctorService {
         doctor = Doctor.builder().
                 TC(doctorRequest.getTC()).
                 name(doctorRequest.getName()).
-                password(doctorRequest.getPassword()).
+                password(passwordEncoder.encode(doctorRequest.getPassword())).
                 specialty(doctorRequest.getSpecialty()).
                 build();
 

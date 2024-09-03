@@ -32,7 +32,7 @@ public class PatientController {
     }
 
     @GetMapping
-    public PatientResponse getPatientById(@RequestParam String TC) {
+    public PatientResponse getPatientByTC(@RequestParam String TC) {
         return new PatientResponse(patientService.getPatientByTC(TC));
     }
 
