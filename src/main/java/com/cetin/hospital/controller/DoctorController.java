@@ -33,7 +33,7 @@ public class DoctorController {
 
     @GetMapping
     public DoctorResponse getDoctorByTC(@RequestParam String TC) {
-        return new DoctorResponse(doctorService.getDoctorByTC(TC));
+        return new DoctorResponse(doctorService.getDoctorForControllerByTC(TC));
     }
 
     @PostMapping

@@ -62,6 +62,10 @@ public class DoctorService {
         return doctorRepository.findByTC(doctorTC);
     }
 
+    public Doctor getDoctorForControllerByTC(String doctorTC) {
+        return getDoctorById(doctorRepository.findByTC(doctorTC).getId());
+    }
+
     public Doctor createDoctor(DoctorRequest doctorRequest) {
         Doctor doctor = doctorRepository.findByTC(doctorRequest.getTC());
         Patient patient = patientRepository.findByTC(doctorRequest.getTC());

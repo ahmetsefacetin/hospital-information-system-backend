@@ -1,9 +1,11 @@
 package com.cetin.hospital.configuration;
 
+import com.cetin.hospital.enumeration.Role;
 import com.cetin.hospital.security.JwtAuthenticationFilter;
 import com.cetin.hospital.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
@@ -37,6 +39,20 @@ public class SecurityConfig {
                 .authorizeHttpRequests(req ->
                         req.requestMatchers("/auth/**")
                                 .permitAll()
+                                .requestMatchers(HttpMethod.GET, "/patients/all")
+                                .hasAnyRole(Role.ADMIN.name())
+                                .requestMatchers(HttpMethod.GET, "/doctors/all")
+                                .hasAnyRole(Role.ADMIN.name(), Role.PATIENT.name())
+                                .requestMatchers(HttpMethod.POST, "/doctors")
+                                .hasAnyRole(Role.ADMIN.name(), Role.DOCTOR.name())
+                                .requestMatchers(HttpMethod.POST, "/patients")
+                                .hasAnyRole(Role.ADMIN.name(), Role.PATIENT.name())
+                                .requestMatchers(HttpMethod.POST, "/prescriptions")
+                                .hasAnyRole(Role.ADMIN.name(), Role.DOCTOR.name())
+                                .requestMatchers(HttpMethod.POST, "/appointments")
+                                .hasAnyRole(Role.ADMIN.name(), Role.PATIENT.name())
+                                .requestMatchers(HttpMethod.GET, "/appointments")
+                                .hasAnyRole(Role.ADMIN.name(), Role.DOCTOR.name())
                                 .anyRequest()
                                 .authenticated()
                 )
